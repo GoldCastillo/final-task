@@ -3,10 +3,12 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-material.css";
 import Moment from "moment";
+import Button from "@material-ui/core/Button";
+
 function Trainings() {
   const [trainings, setTrainings] = useState([]);
   const gridRef = useRef();
-
+  const [deleteOpen, setDeleteOpen] = useState(false);
   useEffect(() => {
     getTrainings();
   }, []);
@@ -17,26 +19,30 @@ function Trainings() {
       .then((data) => setTrainings(data))
       .catch((err) => console.error(err));
   };
+  
+
+  const deleteTraining = (id) => {
+    if (window.confirm("Are you sure")) {
+      fetch("https://customerrest.herokuapp.com/api/trainings/" + id, {
+        method: "DELETE",
+      })
+        .then((_) => gridRef.current.refreshCells({ rowNodes: getTrainings() }))
+        .then((_) => setDeleteOpen(true))
+        .catch((err) => console.error(err));
+    }
+  };
 
   const columns = [
     {
       headerName: "Date",
       field: "date",
       cellRenderer: (data) => {
-        return Moment(data.value).format("MM/DD/YYYY");
+        return Moment(data.value).format("MM/DD/YYYY/HH:mm");
       },
       sortable: true,
       filter: true,
     },
-    {
-      headerName: "Time",
-      field: "date",
-      cellRenderer: (data) => {
-        return Moment(data.value).format("HH:mm");
-      },
-      sortable: true,
-      filter: true,
-    },
+    
     {
       headerName: "Duration",
       field: "duration",
@@ -60,6 +66,21 @@ function Trainings() {
       field: "customer.lastname",
       sortable: true,
       filter: true,
+    },
+    {
+      headerName: "",
+      field: "data",
+      width: "auto",
+      cellRendererFramework: (params) => (
+        <Button
+          variant="outlined"
+          color="secondary"
+          size="small"
+          onClick={() => deleteTraining(params.data.id)}
+        >
+          Delete
+        </Button>
+      ),
     },
   ];
 
