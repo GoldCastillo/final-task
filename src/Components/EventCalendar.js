@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from "react";
-import {render} from "react-dom";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import {Calendar, momentLocalizer} from "react-big-calendar";
-import {Button} from "@material-ui/core";
 import moment from "moment";
 
 

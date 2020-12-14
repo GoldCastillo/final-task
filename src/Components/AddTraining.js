@@ -25,14 +25,12 @@ function AddTraining(props) {
   };
 
  const handleSave = () => {
-   
    const newTraining = {
      ...training,
      date: new Date(training.date),
      customer: props.params.data.links[0].href,
    };
    props.addTraining(newTraining);
-   console.log(training.time)
    handleClose();
  };
   const inputChanged = (event) => {

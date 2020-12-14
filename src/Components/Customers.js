@@ -6,8 +6,8 @@ import AddCustomer from "./AddCustomer";
 import EditCustomer from "./EditCustomer";
 import Button from "@material-ui/core/Button";
 import { PropertyKeys } from "ag-grid-community";
-import AddTraining from "./AddTraining"
-import Trainings from "./Trainings"
+import AddTraining from "./AddTraining";
+import Trainings from "./Trainings";
 
 function Customers() {
   const [customers, setCustomers] = useState([]);
@@ -19,14 +19,12 @@ function Customers() {
     getCustomers();
   }, []);
 
-
   const getCustomers = () => {
     fetch("https://customerrest.herokuapp.com/api/customers")
       .then((response) => response.json())
       .then((data) => setCustomers(data.content))
       .catch((err) => console.error(err));
   };
-  
 
   const addCustomer = (newCustomer) => {
     fetch("https://customerrest.herokuapp.com/api/customers", {
@@ -43,12 +41,10 @@ function Customers() {
       method: "PUT",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(customer),
-      
     })
       .then((_) => gridRef.current.refreshCells({ rowNodes: getCustomers() }))
       .then((_) => setUpdateOpen(true))
       .catch((err) => console.error(err));
-     
   };
 
   const deleteCustomer = (link) => {
@@ -57,18 +53,19 @@ function Customers() {
         .then((_) => gridRef.current.refreshCells({ rowNodes: getCustomers() }))
         .then((_) => setDeleteOpen(true))
         .catch((err) => console.error(err));
-    } };
-    const addTraining = (newTraining) => {
-      fetch("https://customerrest.herokuapp.com/api/trainings", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(newTraining),
-      })
-        .then((_) => gridRef.current.refreshCells({ rowNodes: getCustomers()}))
-        .then((_) => setAddOpen(true))
-        .catch((err) => console.error(err));
-    };
- 
+    }
+  };
+  const addTraining = (newTraining) => {
+    fetch("https://customerrest.herokuapp.com/api/trainings", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(newTraining),
+    })
+      .then((_) => gridRef.current.refreshCells({ rowNodes: getCustomers() }))
+      .then((_) => setAddOpen(true))
+      .catch((err) => console.error(err));
+  };
+
   const columns = [
     {
       headerName: "First name",
@@ -138,7 +135,9 @@ function Customers() {
     {
       headerName: "",
       width: "auto",
-      cellRendererFramework: (params) => <AddTraining addTraining={addTraining} params={params}/>,
+      cellRendererFramework: (params) => (
+        <AddTraining addTraining={addTraining} params={params} />
+      ),
     },
   ];
 
@@ -162,7 +161,7 @@ function Customers() {
         pagination="true"
         paginationPageSize="10"
       ></AgGridReact>
-         </div>
+    </div>
   );
 }
 
