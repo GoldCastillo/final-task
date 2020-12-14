@@ -34,7 +34,7 @@ function Trainings() {
 
   const columns = [
     {
-      headerName: "Date",
+      headerName: "Time",
       field: "date",
       cellRenderer: (data) => {
         return Moment(data.value).format("MM.DD.YYYY HH:mm");

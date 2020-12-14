@@ -1,14 +1,12 @@
 import React, {useState, useEffect} from "react";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import {Calendar, momentLocalizer} from "react-big-calendar";
-import moment from "moment";
+import Moment from "moment";
 
 
 
 function EventCalendar() {
-  
-  const localizer = momentLocalizer(moment);
-
+  const localizer = momentLocalizer(Moment);
   useEffect(() => {
     getEvents();
   }, []);
@@ -29,7 +27,7 @@ function EventCalendar() {
             title: data[i].activity,
             allday: "false",
             start: new Date(data[i].date),
-            end: moment(data[i].date).add(data[i].duration, "minutes").toDate(),
+            end: Moment(data[i].date).add(data[i].duration, "minutes").toDate(),
           });
           setEvents(eventArray);
         }
