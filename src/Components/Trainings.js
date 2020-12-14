@@ -37,7 +37,7 @@ function Trainings() {
       headerName: "Date",
       field: "date",
       cellRenderer: (data) => {
-        return Moment(data.value).format("MM/DD/YYYY/HH:mm");
+        return Moment(data.value).format("MM.DD.YYYY HH:mm");
       },
       sortable: true,
       filter: true,

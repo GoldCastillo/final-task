@@ -14,7 +14,6 @@ function Customers() {
   const [addOpen, setAddOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const [trainings, setTrainings] = useState([]);
   const gridRef = useRef();
   useEffect(() => {
     getCustomers();
@@ -27,12 +26,7 @@ function Customers() {
       .then((data) => setCustomers(data.content))
       .catch((err) => console.error(err));
   };
-  const getTrainings = () => {
-    fetch("https://customerrest.herokuapp.com/api/trainings")
-      .then((response) => response.json())
-      .then((data) => setTrainings(data))
-      .catch((err) => console.error(err));
-  };
+  
 
   const addCustomer = (newCustomer) => {
     fetch("https://customerrest.herokuapp.com/api/customers", {
